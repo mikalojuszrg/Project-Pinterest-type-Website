@@ -7,12 +7,14 @@ const UserContext = createContext<{
   user: User | null;
   setUser: (user: User) => void;
   isLoggedIn: boolean;
+  handleLogin: (user: User) => void;
   handleLogOut: () => void;
 }>({
   user: null,
   setUser: () => {},
   isLoggedIn: false,
   handleLogOut: () => {},
+  handleLogin: () => {},
 });
 
 const UserProvider = ({ children }: PropsWithChildren) => {
@@ -24,8 +26,14 @@ const UserProvider = ({ children }: PropsWithChildren) => {
     setUser(null);
   };
 
+  const handleLogin = (user: User) => {
+    setUser(user);
+  };
+
   return (
-    <UserContext.Provider value={{ user, isLoggedIn, setUser, handleLogOut }}>
+    <UserContext.Provider
+      value={{ user, isLoggedIn, setUser, handleLogOut, handleLogin }}
+    >
       {children}
     </UserContext.Provider>
   );
