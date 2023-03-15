@@ -12,11 +12,12 @@ import { loginFormInitialValues } from "./const";
 import { useContext } from "react";
 
 const Login = () => {
-  const { handleLogin } = useContext(UserContext);
+  const { handleLogin, isLoggedIn } = useContext(UserContext);
 
   const onSubmit = (user: User) => {
     console.log(user);
     handleLogin(user);
+    console.log(isLoggedIn);
   };
   return (
     <Paper elevation={24}>
