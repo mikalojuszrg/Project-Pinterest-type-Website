@@ -1,19 +1,24 @@
-import { ImageList, ImageListItem } from "@mui/material";
+import { ImageList, ImageListItem, LinearProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import { PixabayImage } from "../../types/image";
+import { uniqBy } from "lodash";
 import { useImages } from "../../hooks/images";
 
 const Home = () => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<PixabayImage[]>([]);
 
-  const { data } = useImages(page);
+  const { data, isLoading } = useImages(page);
   const images = data || [];
 
   useEffect(() => {
-    setItems((prevItems) => [...prevItems, ...images]);
+    if (!isLoading) {
+      setItems((prevItems) =>
+        uniqBy([...prevItems, ...images], (image) => image.id)
+      );
+    }
   }, [images]);
 
   const fetchData = () => {
@@ -25,7 +30,7 @@ const Home = () => {
       dataLength={images.length}
       next={fetchData}
       hasMore={true}
-      loader={<h4>Loading...</h4>}
+      loader={<LinearProgress />}
       endMessage={
         <p style={{ textAlign: "center" }}>
           <b>Yay! You have seen it all</b>
