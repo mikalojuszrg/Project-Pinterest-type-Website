@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import UserList, { User } from "./UserList";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import BasicTable from "../../components/Table/Table";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -22,6 +22,10 @@ const Examples = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const a = useMemo(() => {}, []);
+  // const b = useCallback(() => {
+  //   first;
+  // }, [second]);
 
   useEffect(() => {
     setIsLoading(true);
